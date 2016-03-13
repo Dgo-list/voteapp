@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>Vote App</title>
+		<style type="text/css">
+			div.disabledquestionstyle {
+				background-color:lightblue;
+			}
+			div.questionstyle {
+				background-color:blue;
+			}
+		</style>
+		{% load staticfiles %}
+		<link rel='stylesheet' type='text/css' href='{% static 'vote/loginstyle2.css' %}'>
+	</head>
+	<body>
+		<div id="header">
+			<div class="page-full-width cf">
+				<div id="login-intro" class="fl">
+					<h1>Voting Application</h1>
+					<h5>Manage questions</h5>
+				</div> 
+			</div>
+		</div>
+		{% if message %}
+			<div class='information-box round'>{{message}}</div>
+		{% endif %}
+		<div id='question-content'>
+			<div id='question-inner-div'>
+				<form id='create-question-form' method='POST' action='/createquestion/'>
+					{% csrf_token %}
+					<p><label class='create-question-label' for'question-text'>Question</label>
+						<input id='create-question' type='text' name='question_text'></input></p>
+					<p><label class='create-question-label' for'option1'>Option 1:</label>
+						<input class='create-option' id='option1' type='text' name='option1'></input></p>
+					<p><label class='create-question-label' for'option2'>Option 2:</label>
+						<input class='create-option'  id='option2' type='text' name='option2'></input></p>
+					<p><label class='create-question-label' for'option3'>Option 3:</label>
+						<input class='create-option' id='option3' type='text' name='option3'></input></p>
+					<p><label class='create-question-label' for'option4'>Option 4:</label>
+						<input class='create-option' id='option4' type='text' name='option4'></input></p>
+					<p><input id='submit-button' type='submit'></input></p>
+				</form>
+			</div>
+		</div>
+		<div>{{message}}</div>
+		{% for question in questions %}
+		<div id='question-content'>
+
+			<div class='question-vote-report'>
+				{{question.question_text}}
+				{% for option in question.options %}
+				<div class='options'>
+					<span class='optiontext'>{{option.text}}</span>
+					<span class='votes'>{{option.votes}} votes</span>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endfor %}
+	</body>
+</html>

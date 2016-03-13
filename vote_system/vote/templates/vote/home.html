@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<title>Votes App</title>
+		{% load staticfiles %}
+		<link rel='stylesheet' type='text/css' href='{% static 'vote/loginstyle2.css' %}'>
+	</head>
+	<body>
+		<div id="header">
+			<div class="page-full-width cf">
+				<div id="login-intro" class="fl">
+					<h1>Voting Application</h1>
+					<h5>Login or register below</h5>
+				</div> 
+			</div>
+		</div>
+		<div id='main-content'>
+			{% if message %}
+			<div class='information-box round'>{{message}}</div>
+			{% endif %}
+			<div id='login-content'>
+				<h2>Login Here</h2>
+				<div class='block'>
+					<form id='login-form' action='/loginuser/' method='POST'>
+						{% csrf_token %}
+						<p><label for='login-username'>username</label>
+							<input id='login-username' type='text' name='username'></p>
+						<p><label for='login-password'>password</label>
+							<input id='login-password' type='password' name='password'></p>
+						{% if nexturl != None %}
+						<p><input id='login-nexturl' type='hidden' name='nexturl' value='{{nexturl}}'></p>
+						{% endif %}
+						<p><input id='submit' type='submit'></p>
+					</form>
+				</div>
+			</div>
+
+			<div id='register-content'>
+				<h2>Register Here</h2>
+				<div class='block'>
+					<form id='register-form' action='/registeruser/' method='POST'> 
+						<fieldset>
+							{% csrf_token %}
+							<p><label for='register-username'>username</label>
+								<input id='register-username' type='text' name='username'></p>
+							<p><label for='register-password'>password</label>
+								<input id='register-password' type='password' name='password'></p>
+							<p><label for='confirm-password'>confirm password</label>
+								<input id='confirm-password' type='password' name='confirmpassword'> </p>
+							<p><input id='submit' type='submit' value='submit'></p>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

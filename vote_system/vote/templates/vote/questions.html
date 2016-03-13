@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Vote App</title>
+		<style type="text/css">
+			div.disabledquestionstyle {
+				background-color:lightblue;
+			}
+			div.questionstyle {
+				background-color:blue;
+			}
+		</style>
+		{% load staticfiles %}
+		<link rel='stylesheet' type='text/css' href='{% static 'vote/loginstyle2.css' %}'>
+	</head>
+	<body>
+		<div id="header">
+			<div class="page-full-width cf">
+				<div id="login-intro" class="fl">
+					<h1>Voting Application</h1>
+					<h5>Please vote your choice</h5>
+				</div> 
+			</div>
+		</div>
+		{% if message %}
+			<div class='information-box round'>{{message}}</div>
+		{% endif %}
+		{% for question in questions %}
+		<div id='{{question.style}}'>
+			<div id='question-inner-div'>
+			{{question.question_text}}
+			<div class={{css_style}}>
+				<form action='/votequestion/{{question.id}}' method='POST'> {% csrf_token %}
+				{% for option in question.options %}
+				<div id='question-options'>
+					{% if question.is_disabled %}
+					<input type='radio' name='{{question.id}}' value='{{option.id}}' disabled = 'True'>
+					{% else %}
+					<input type='radio' name='{{question.id}}' value='{{option.id}}'>
+					{% endif %}
+					{{option.text}}
+				</div>
+				{% endfor %}
+				<input id='submit' type='submit'>
+				</form>
+			</div>
+			</div>
+		</div>
+		{% endfor %}
+	</body>
+</html>
